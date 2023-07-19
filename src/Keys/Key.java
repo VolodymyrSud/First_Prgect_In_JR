@@ -16,7 +16,7 @@ public class Key {
         String filePath = file.getPath();
         try (FileReader reader = new FileReader(filePath)) {
             int character;
-            while ((character = reader.read()) != -1) {
+            while ((character = reader.read()) != Constants.LAST_POINT) {
                 content.append((char) character);
             }
         } catch (IOException e) {

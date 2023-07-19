@@ -1,3 +1,4 @@
+import Keys.Constants;
 import Keys.Key;
 
 import java.io.File;
@@ -9,34 +10,32 @@ public class CeasarCypher {
 
     public void encode(String sourceFileName, String targetFileName, Key key) {
         String fileText = key.readeFile(new File(sourceFileName));
-        StringBuilder cipherText = new StringBuilder();
+        StringBuilder textBuilder = new StringBuilder();
         for (char ch : fileText.toCharArray()) {
             int index = ALPHABET.indexOf(ch);
-            if (index != -1) {
+            if (index != Constants.LAST_POINT) {
                 int encryptedIndex = (index + key.getShift()) % ALPHABET.length();
-                cipherText.append(ALPHABET.charAt(encryptedIndex));
+                textBuilder.append(ALPHABET.charAt(encryptedIndex));
             } else {
-                cipherText.append(ch);
+                textBuilder.append(ch);
             }
         }
-        saveToFile(targetFileName, cipherText.toString());
+        saveToFile(targetFileName, textBuilder.toString());
     }
 
     public void decode(String sourceFileName, String targetFileName, Key key) {
         String fileText = key.readeFile(new File(sourceFileName));
-
-        StringBuilder plainText = new StringBuilder();
-
+        StringBuilder textBuilder = new StringBuilder();
         for (char ch : fileText.toCharArray()) {
             int index = ALPHABET.indexOf(ch);
-            if (index != -1) {
+            if (index != Constants.LAST_POINT) {
                 int decryptedIndex = (index - key.getShift() + ALPHABET.length()) % ALPHABET.length();
-                plainText.append(ALPHABET.charAt(decryptedIndex));
+                textBuilder.append(ALPHABET.charAt(decryptedIndex));
             } else {
-                plainText.append(ch);
+                textBuilder.append(ch);
             }
         }
-        saveToFile(targetFileName, plainText.toString());
+        saveToFile(targetFileName, textBuilder.toString());
     }
 
     private void saveToFile(String fileName, String text) {
